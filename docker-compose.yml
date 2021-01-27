@@ -21,6 +21,7 @@ services:
     restart: always
     volumes:
       - $PWD/.htaccess:/var/www/html/.htaccess
+      - $PWD/addons/plugins-cors:/var/www/html/wp-content/plugins/cors
     environment:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_USER: wordpress
