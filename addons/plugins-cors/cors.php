@@ -10,13 +10,25 @@
  * @package cors
  */
 
+function rest_pre_serve_request_set_cors( $value ) {
+    set_cors();
+
+    return $value;
+}
+
+function set_cors() {
+    header( 'Access-Control-Allow-Origin: *' );
+    header( 'Access-Control-Allow-Methods: GET,POST,PUT,DELETE,PATCH,OPTIONS' );
+    // header( 'Access-Control-Allow-Credentials: true' );
+    header( 'Access-Control-Allow-Headers: accept, referer, user-agent, origin, x-requested-with, content-type, sentry-trace, authorization' );
+
+    if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+        header("HTTP/1.1 200 OK");
+        exit;
+    }
+}
 
 remove_filter( 'rest_pre_serve_request', 'rest_send_cors_headers' );
 
-add_filter( 'rest_pre_serve_request', function ( $value ) {
-    header( 'Access-Control-Allow-Origin: *' );
-    header( 'Access-Control-Allow-Methods: GET,POST,PUT,DELETE,OPTIONS,PATCH' );
-    header( 'Access-Control-Allow-Credentials: true' );
-    header( 'Access-Control-Allow-Headers: origin, x-requested-with, content-type, sentry-trace, authorization' );
-    return $value;
-});
+add_filter( 'rest_pre_serve_request', 'rest_pre_serve_request_set_cors', 10);
+add_action( 'rest_api_init', 'set_cors', 10);

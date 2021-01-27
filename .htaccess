@@ -5,26 +5,20 @@ SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
 # dynamically generated, and should only be modified via WordPress filters.
 # Any changes to the directives between these markers will be overwritten.
 <IfModule mod_rewrite.c>
-RewriteEngine On
-RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
-RewriteBase /
-RewriteRule ^index\.php$ - [L]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /index.php [L]
-
+  RewriteEngine On
+  RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]  
+  RewriteBase /
+  RewriteRule ^index\.php$ - [L]  
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.php [L]
 </IfModule>
 
-<IfModule mod_setenvif.c>
-  <IfModule mod_headers.c>
-    <FilesMatch "\.(bmp|cur|gif|ico|jpe?g|png|svgz?|webp)$">
-      SetEnvIf Origin ":" IS_CORS
-      Header set Access-Control-Allow-Origin "*" env=IS_CORS
-      Header set Access-Control-Allow-Methods: "GET,POST,OPTIONS,DELETE,PUT" env=IS_CORS
-      Header set Access-Control-Allow-Credentials: "true" env=IS_CORS
-      Header add Access-Control-Allow-Headers "origin, x-requested-with, content-type, sentry-trace"   env=IS_CORS    
-    </FilesMatch>
-  </IfModule>
-</IfModule>
+#<IfModule mod_headers.c>
+#  Header add Access-Control-Allow-Origin "*"
+#  Header set Access-Control-Allow-Methods "GET,POST,OPTIONS,DELETE,PUT"
+#  # Header set Access-Control-Allow-Credentials "true"
+#  Header set Access-Control-Allow-Headers "accept, referer, user-agent, origin, x-requested-with, content-type, sentry-trace, authorization"
+#</IfModule>
 
 # END WordPress
