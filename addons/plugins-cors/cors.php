@@ -28,6 +28,7 @@ function set_cors() {
     }
 }
 
+
 remove_filter( 'rest_pre_serve_request', 'rest_send_cors_headers' );
 
 add_filter( 'rest_pre_serve_request', 'rest_pre_serve_request_set_cors', 10);

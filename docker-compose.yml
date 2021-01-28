@@ -21,7 +21,9 @@ services:
     restart: always
     volumes:
       - $PWD/.htaccess:/var/www/html/.htaccess
+      - $PWD/addons/dokan-lite:/var/www/html/wp-content/plugins/dokan-lite
       - $PWD/addons/plugins-cors:/var/www/html/wp-content/plugins/cors
+      - $PWD/addons/plugins-mft:/var/www/html/wp-content/plugins/mft-addons
       - $PWD/apache/httpd.conf:/etc/apache2/httpd.conf
     environment:
       WORDPRESS_DB_HOST: db:3306
